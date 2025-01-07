@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Token ${token}`;
   }
   return config;
 });
@@ -22,7 +22,7 @@ export const getFoodItems = async (category = null) => {
 };
 
 export const getCategories = async () => {
-  const response = await api.get("/categories");
+  const response = await api.get("/core/categories/");
   return response.data;
 };
 

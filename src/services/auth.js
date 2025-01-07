@@ -20,7 +20,7 @@ export const logoutUser = async () => {
 export const getCurrentUser = async () => {
   try {
     console.log("Fetching current user...");
-    const response = await api.get("/auth/user/");
+    const response = await api.get("/accounts/users/");
     console.log("Response received:", response);
     return response.data;
   } catch (error) {
