@@ -23,7 +23,8 @@ const Login = () => {
       await login(formData);
       navigate("/");
     } catch (err) {
-      setError("Invalid email or password");
+      setError("Invalid username or password");
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -45,8 +46,8 @@ const Login = () => {
           )}
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
+              <label htmlFor="username" className="sr-only">
+                Username
               </label>
               <input
                 id="username"

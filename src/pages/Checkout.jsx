@@ -1,3 +1,10 @@
+import { useCart } from "../context/CartContext";
+import { useNavigate } from "react-router-dom"; // Added import for useNavigate
+import { useState, useEffect } from "react";
+import Card from "../components/common/Card";
+import Input from "../components/common/Input";
+import Button from "../components/common/Button";
+
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, cartTotal, clearCart } = useCart();
