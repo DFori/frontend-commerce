@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getFoodItems, getCategories } from "../services/api";
 
 import CategoryList from "../components/food/CategoryList";
