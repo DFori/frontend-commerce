@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
+import api from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const [formData, setFormData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -41,20 +42,30 @@ const Register = () => {
     }
 
     setLoading(true);
-    try {
-      await register({
-        username: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
-      navigate("/");
-    } catch (error) {
-      setErrors({
-        submit: error.message || "Registration failed. Please try again.",
-      });
-    } finally {
-      setLoading(false);
-    }
+
+    await api.post("/accounts/users/", formData)
+    .then((response) => {
+      localStorage.setItem("token", response.data.auth_token);
+      navigate("/")
+    })
+    .catch(error => [
+      console.log(error)
+    ]);
+
+    // try {
+    //   await register({
+    //     username: formData.name,
+    //     email: formData.email,
+    //     password: formData.password,
+    //   });
+    //   navigate("/");
+    // } catch (error) {
+    //   setErrors({
+    //     submit: error.message || "Registration failed. Please try again.",
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleChange = (e) => {
@@ -81,13 +92,13 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
-            label="Full Name"
+            label="Username"
             type="text"
-            name="name"
-            value={formData.name}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
-            error={errors.name}
-            placeholder="John Doe"
+            error={errors.username}
+            placeholder="John_Doe"
             required
           />
 
