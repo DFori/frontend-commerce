@@ -13,12 +13,12 @@ export const registerUser = async (userData) => {
 };
 
 export const logoutUser = async () => {
-  const token = localStorage.removeItem("token")
-  await api.post("/auth/token/logout/",{
+  // localStorage.removeItem("token");
+  const token = localStorage.getItem("token")
+  await api.post("/auth/token/logout/", null, {
     headers: {
-      Authorization: `Token ${token}`
+      Authorization: `Bearer ${token}`, // Include the token in the Authorization header
     },
-
   });
 };
 
