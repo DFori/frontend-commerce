@@ -1,7 +1,11 @@
+import { useCart } from "../context/CartContext";
+import { Link, useNavigate } from "react-router-dom"; // Correct import for Link and useNavigate
+import { useState } from "react"; // Added import for useState
+
 const Cart = () => {
   const { items, cartTotal } = useCart();
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate(); // Correctly placed navigate declaration
 
   const handleCheckout = async () => {
     try {

@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Input from "../components/common/Input";
@@ -43,29 +43,29 @@ const Register = () => {
 
     setLoading(true);
     await api
-      .post('/accounts/users/', formData)
-      .then(response => {
+      .post("/accounts/users/", formData)
+      .then((response) => {
         localStorage.setItem("token", response.data.token);
-        navigate("/")
+        navigate("/");
       })
-      .catch(error => {
-        console.log(error)
-      })
-      // navigate("/")
-    // try {
-    //   await register({
-    //     username: formData.name,
-    //     email: formData.email,
-    //     password: formData.password,
-    //   });
-    //   navigate("/");
-    // } catch (error) {
-    //   setErrors({
-    //     submit: error.message || "Registration failed. Please try again.",
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
+      .catch((error) => {
+        console.log(error);
+      });
+    // navigate("/")
+    try {
+      await register({
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      navigate("/");
+    } catch (error) {
+      setErrors({
+        submit: error.message || "Registration failed. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
