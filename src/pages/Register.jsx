@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import Card from "../components/common/Card";
@@ -8,7 +8,7 @@ import api from "../services/api";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,7 +20,7 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.username) newErrors.username = "Name is required";
+    if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     if (!formData.password) newErrors.password = "Password is required";
     if (formData.password !== formData.confirmPassword) {
@@ -42,30 +42,30 @@ const Register = () => {
     }
 
     setLoading(true);
-    await api
-      .post("/accounts/users/", formData)
-      .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        navigate("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // navigate("/")
-    try {
-      await register({
-        username: formData.name,
-        email: formData.email,
-        password: formData.password,
-      });
-      navigate("/");
-    } catch (error) {
-      setErrors({
-        submit: error.message || "Registration failed. Please try again.",
-      });
-    } finally {
-      setLoading(false);
-    }
+
+    await api.post("/accounts/users/", formData)
+    .then((response) => {
+      localStorage.setItem("token", response.data.auth_token);
+      navigate("/")
+    })
+    .catch(error => [
+      console.log(error)
+    ]);
+
+    // try {
+    //   await register({
+    //     username: formData.name,
+    //     email: formData.email,
+    //     password: formData.password,
+    //   });
+    //   navigate("/");
+    // } catch (error) {
+    //   setErrors({
+    //     submit: error.message || "Registration failed. Please try again.",
+    //   });
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   const handleChange = (e) => {
@@ -92,13 +92,13 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <Input
-            label="Full Name"
+            label="Username"
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
             error={errors.username}
-            placeholder="John Doe"
+            placeholder="John_Doe"
             required
           />
 
