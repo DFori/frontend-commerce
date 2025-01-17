@@ -17,12 +17,12 @@ api.interceptors.request.use((config) => {
 
 export const getFoodItems = async (category = null) => {
   // const url = category ? `/food?category=${category}` : "/food";
-  const response = await api.get("/core/latest-products/");
+  const response = await api.get("/v1/core/latest-products/");
   return response.data;
 };
 
 export const getCategories = async () => {
-  const response = await api.get("/core/categories/");
+  const response = await api.get("/v1/core/categories/");
   return response.data;
 };
 

@@ -1,6 +1,7 @@
 import { useCart } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom"; // Correct import for Link and useNavigate
 import { useState } from "react"; // Added import for useState
+import CartItem from "../components/cart/CartItem"; // Import CartItem
 
 const Cart = () => {
   const { items, cartTotal } = useCart();

@@ -50,7 +50,7 @@ const Home = () => {
             </p>
             <Link
               to="/menu"
-              className="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition-colors"
+              className="bg-purple-500 text-white px-8 py-3 rounded-lg hover:bg-purple-600 transition-colors"
             >
               Order Now
             </Link>
@@ -88,7 +88,7 @@ const Home = () => {
       </section>
 
       {/* How It Works */}
-      <section className="bg-orange-50 py-12 px-4">
+      <section className="bg-purple-50 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
