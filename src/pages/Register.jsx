@@ -45,27 +45,13 @@ const Register = () => {
 
     await api.post("/accounts/users/", formData)
     .then((response) => {
-      localStorage.setItem("token", response.data.auth_token);
+      // localStorage.setItem("token", response.data.auth_token);
+      console.log(response.status)
       navigate("/")
     })
     .catch(error => [
       console.log(error)
     ]);
-
-    // try {
-    //   await register({
-    //     username: formData.name,
-    //     email: formData.email,
-    //     password: formData.password,
-    //   });
-    //   navigate("/");
-    // } catch (error) {
-    //   setErrors({
-    //     submit: error.message || "Registration failed. Please try again.",
-    //   });
-    // } finally {
-    //   setLoading(false);
-    // }
   };
 
   const handleChange = (e) => {

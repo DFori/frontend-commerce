@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+/* eslint-disable react/no-unescaped-entities */
+import  { useState } from "react";
+import api from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+// import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  // const { login } = useAuth();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -19,15 +21,15 @@ const Login = () => {
     setError("");
     setLoading(true);
 
-    try {
-      await login(formData);
-      navigate("/");
-    } catch (err) {
-      setError("Invalid username or password");
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
+    await api.post("/auth/token/login", formData)
+    .then(response => {
+      localStorage.setItem("token", response.data.auth_token)
+      console.log(response.status)
+      navigate("/")
+    })
+    .catch(error => {
+      console.log(error)
+    })
   };
 
   return (
