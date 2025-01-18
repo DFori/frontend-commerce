@@ -16,13 +16,18 @@ api.interceptors.request.use((config) => {
 });
 
 export const getFoodItems = async (category = null) => {
-  // const url = category ? `/food?category=${category}` : "/food";
   const response = await api.get("/core/latest-products/");
   return response.data;
 };
 
 export const getCategories = async () => {
   const response = await api.get("/core/categories/");
+  return response.data;
+};
+
+// New createOrder function
+export const createOrder = async (orderData) => {
+  const response = await api.post("/order/checkout/", orderData);
   return response.data;
 };
 

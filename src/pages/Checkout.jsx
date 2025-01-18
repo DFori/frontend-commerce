@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Card from "../components/common/Card";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
+import { createOrder } from "../services/api"; // Importing createOrder function
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Checkout = () => {
         totalAmount: cartTotal,
       };
 
-      await createOrder(orderData);
+      await createOrder(orderData); // Using createOrder function
       clearCart();
       navigate("/orders");
     } catch (error) {
