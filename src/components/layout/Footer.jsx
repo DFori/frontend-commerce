@@ -17,7 +17,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-gray-600 hover:text-orange-500"
+                  className="text-gray-600 hover:text-[#b4166d]"
                 >
                   About Us
                 </Link>
@@ -25,13 +25,13 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="text-gray-600 hover:text-orange-500"
+                  className="text-gray-600 hover:text-[#b4166d]"
                 >
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-gray-600 hover:text-orange-500">
+                <Link to="/faq" className="text-gray-600 hover:text-[#b4166d]">
                   FAQ
                 </Link>
               </li>

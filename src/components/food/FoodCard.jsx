@@ -37,7 +37,7 @@ const FoodCard = ({ food }) => {
         </div>
         <button
           onClick={() => addItem(food)}
-          className="w-full mt-4 bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors"
+          className="w-full mt-4 bg-[#b4166d] text-white py-2 rounded-lg hover:bg-[#b4166d]-600 transition-colors"
         >
           Add to Cart
         </button>

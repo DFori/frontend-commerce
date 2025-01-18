@@ -1,9 +1,9 @@
 import React from "react";
 
 const variants = {
-  primary: "bg-orange-500 hover:bg-orange-600 text-white",
+  primary: "bg-[#b4166d] hover:bg-orange-600 text-white",
   secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
-  outline: "border-2 border-orange-500 text-orange-500 hover:bg-orange-50",
+  outline: "border-2 border-[#b4166d] text-[#b4166d] hover:bg-orange-50",
   danger: "bg-red-500 hover:bg-red-600 text-white",
 };
 

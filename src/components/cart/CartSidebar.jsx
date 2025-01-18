@@ -42,7 +42,7 @@ const CartSidebar = ({ isOpen, onClose }) => {
               onClick={() => {
                 /* Handle checkout */
               }}
-              className="w-full py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600"
+              className="w-full py-2 bg-[#b4166d] text-white rounded-lg hover:bg-[#690c43]"
             >
               Checkout
             </button>

@@ -32,7 +32,7 @@ const Order = () => {
       {orders.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-gray-600 mb-4">You have no orders yet.</p>
-          <Link to="/menu" className="text-orange-500 hover:text-orange-600">
+          <Link to="/menu" className="text-[#b4166d] hover:text-[#690c43]">
             Start Shopping
           </Link>
         </div>

@@ -50,7 +50,7 @@ const Home = () => {
             </p>
             <Link
               to="/menu"
-              className="bg-purple-500 text-white px-8 py-3 rounded-lg hover:bg-purple-600 transition-colors"
+              className="bg-[#b4166d] text-white px-8 py-3 rounded-lg hover:bg-[#690c43] transition-colors"
             >
               Order Now
             </Link>

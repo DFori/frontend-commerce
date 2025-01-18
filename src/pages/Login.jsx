@@ -56,7 +56,7 @@ const Login = () => {
                 name="username"
                 type="username"
                 required
-                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#b4166d] focus:border-[#b4166d] focus:z-10 sm:text-sm"
                 placeholder="User Name"
                 value={formData.username}
                 onChange={(e) =>
@@ -73,7 +73,7 @@ const Login = () => {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#b4166d] focus:border-[#b4166d] focus:z-10 sm:text-sm"
                 placeholder="Password"
                 value={formData.password}
                 onChange={(e) =>
@@ -87,7 +87,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#b4166d] hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b4166d]"
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
@@ -96,7 +96,7 @@ const Login = () => {
         <div className="text-center">
           <Link
             to="/register"
-            className="text-orange-500 hover:text-orange-600"
+            className="text-[#b4166d] hover:text-orange-600"
           >
             Don't have an account? Sign up
           </Link>

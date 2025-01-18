@@ -5,7 +5,7 @@ const CategoryList = ({ categories, activeCategory, onSelectCategory }) => {
         onClick={() => onSelectCategory(null)}
         className={`px-6 py-2 rounded-full mr-3 whitespace-nowrap ${
           !activeCategory
-            ? "bg-orange-500 text-white"
+            ? "bg-[#b4166d] text-white"
             : "bg-white text-gray-600 hover:bg-gray-100"
         }`}
       >
@@ -17,7 +17,7 @@ const CategoryList = ({ categories, activeCategory, onSelectCategory }) => {
           onClick={() => onSelectCategory(category.id)}
           className={`px-6 py-2 rounded-full mr-3 whitespace-nowrap ${
             activeCategory === category.id
-              ? "bg-orange-500 text-white"
+              ? "bg-[#b4166d] text-white"
               : "bg-white text-gray-600 hover:bg-gray-100"
           }`}
         >

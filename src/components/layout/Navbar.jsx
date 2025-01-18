@@ -22,16 +22,16 @@ const Navbar = () => {
             >
               <Menu className="h-6 w-6 text-gray-500" />
             </button>
-            <Link to="/" className="text-2xl font-bold text-orange-500">
-              FoodExpress
+            <Link to="/" className="text-2xl font-bold text-[#b4166d]">
+              Decena
             </Link>
           </div>
 
           <div className="hidden sm:flex space-x-8">
-            <Link to="/menu" className="text-gray-600 hover:text-orange-500">
+            <Link to="/menu" className="text-gray-600 hover:text-[#b4166d]">
               Menu
             </Link>
-            <Link to="/orders" className="text-gray-600 hover:text-orange-500">
+            <Link to="/orders" className="text-gray-600 hover:text-[#b4166d]">
               Orders
             </Link>
           </div>
@@ -41,26 +41,26 @@ const Navbar = () => {
               <div className="flex items-center space-x-4">
                 <Link
                   to="/profile"
-                  className="text-gray-600 hover:text-orange-500"
+                  className="text-gray-600 hover:text-[#b4166d]"
                 >
                   <User className="h-6 w-6" />
                 </Link>
                 <button
                   onClick={logout}
-                  className="text-gray-600 hover:text-orange-500"
+                  className="text-gray-600 hover:text-[#b4166d]"
                 >
                   <LogOut className="h-6 w-6" />
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="text-gray-600 hover:text-orange-500">
+              <Link to="/login" className="text-gray-600 hover:text-[#b4166d]">
                 Login
               </Link>
             )}
             <Link to="/cart" className="relative">
               <ShoppingBag className="h-6 w-6 text-gray-600" />
               {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-orange-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#b4166d] text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -78,13 +78,13 @@ const Navbar = () => {
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link
             to="/menu"
-            className="block px-3 py-2 text-gray-600 hover:bg-orange-50"
+            className="block px-3 py-2 text-gray-600 hover:bg-[#b4166d]"
           >
             Menu
           </Link>
           <Link
             to="/orders"
-            className="block px-3 py-2 text-gray-600 hover:bg-orange-50"
+            className="block px-3 py-2 text-gray-600 hover:bg-[#b4166d]"
           >
             Orders
           </Link>

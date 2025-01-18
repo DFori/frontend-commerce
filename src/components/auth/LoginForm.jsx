@@ -49,7 +49,7 @@ const LoginForm = () => {
             name="email"
             type="email"
             required
-            className="mt-1 appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+            className="mt-1 appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#b4166d] focus:border-[#b4166d] focus:z-10 sm:text-sm"
             placeholder="Email address"
             value={formData.email}
             onChange={(e) =>
@@ -70,7 +70,7 @@ const LoginForm = () => {
             name="password"
             type="password"
             required
-            className="mt-1 appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
+            className="mt-1 appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-[#b4166d] focus:border-[#b4166d] focus:z-10 sm:text-sm"
             placeholder="Password"
             value={formData.password}
             onChange={(e) =>
@@ -83,7 +83,7 @@ const LoginForm = () => {
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50"
+        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#b4166d] hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b4166d] disabled:opacity-50"
       >
         {loading ? "Signing in..." : "Sign in"}
       </button>
