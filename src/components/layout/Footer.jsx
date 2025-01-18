@@ -40,7 +40,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-2 text-gray-600">
-              <li>Email: support@foodexpress.com</li>
+              <li>Email: support@decena.com</li>
               <li>Phone: (555) 123-4567</li>
               <li>Address: 123 Food Street, Cuisine City</li>
             </ul>
@@ -48,7 +48,7 @@ const Footer = () => {
         </div>
         <div className="mt-8 pt-8 border-t text-center text-gray-600">
           <p>
-            &copy; {new Date().getFullYear()} FoodExpress. All rights reserved.
+            &copy; {new Date().getFullYear()} Decena. All rights reserved.
           </p>
         </div>
       </div>

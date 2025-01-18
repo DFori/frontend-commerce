@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
 import Layout from "./components/layout/Layout";
-import { Home, Menu, Cart, Login, Register, Checkout } from "./pages"; // Removed Order from here
-import Order from "./pages/Order"; // Keeping this import
+import { Home, Menu, Cart, Login, Register, Checkout, AddProductCategory } from "./pages"; 
+import Order from "./pages/Order"; 
+import UserProfile from "./components/UserProfile"; // Import UserProfile
 
 const App = () => {
   return (
@@ -19,7 +20,9 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/orders" element={<Order />} /> {/* New route for orders */}
+              <Route path="/orders" element={<Order />} />
+              <Route path="/profile" element={<UserProfile />} /> {/* New route for UserProfile */}
+              <Route path="/add-product-category" element={<AddProductCategory />} /> {/* New route for AddProductCategory */}
             </Routes>
           </Layout>
         </CartProvider>

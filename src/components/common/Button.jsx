@@ -1,9 +1,9 @@
 import React from "react";
 
 const variants = {
-  primary: "bg-[#b4166d] hover:bg-orange-600 text-white",
+  primary: "bg-[#b4166d] hover:bg-[#690c43] text-white",
   secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
-  outline: "border-2 border-[#b4166d] text-[#b4166d] hover:bg-orange-50",
+  outline: "border-2 border-[#b4166d] text-[#b4166d] hover:bg-[#b4166d]",
   danger: "bg-red-500 hover:bg-red-600 text-white",
 };
 
@@ -23,7 +23,7 @@ const Button = ({
   ...props
 }) => {
   const baseClasses =
-    "rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 disabled:opacity-50 disabled:cursor-not-allowed";
+    "rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b4166d] disabled:opacity-50 disabled:cursor-not-allowed";
 
   return (
     <button

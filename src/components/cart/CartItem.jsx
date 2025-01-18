@@ -16,7 +16,7 @@ const CartItem = ({ item }) => {
   return (
     <div className="flex items-center py-4 border-b">
       <img
-        src={item.image}
+        src={item.get_image}
         alt={item.name}
         className="w-20 h-20 object-cover rounded-lg"
       />

@@ -45,7 +45,7 @@ const Cart = () => {
             <button
               onClick={handleCheckout}
               disabled={isSubmitting}
-              className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 disabled:opacity-50"
+              className="w-full bg-[#b4166d] text-white py-3 rounded-lg hover:bg-[#690c43] disabled:opacity-50"
             >
               {isSubmitting ? "Processing..." : "Proceed to Checkout"}
             </button>

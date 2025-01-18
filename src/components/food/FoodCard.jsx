@@ -7,8 +7,9 @@ const FoodCard = ({ food }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+      {console.log(food)}
       <img
-        src={food.image}
+        src={food.get_image}
         alt={food.name}
         className="w-full h-48 object-cover"
       />

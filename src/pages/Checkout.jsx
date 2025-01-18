@@ -154,7 +154,7 @@ const Checkout = () => {
                         paymentMethod: e.target.value,
                       })
                     }
-                    className="text-orange-500 focus:ring-orange-500"
+                    className="text-[#b4166d] focus:ring-[#b4166d]"
                   />
                   <span>Credit/Debit Card</span>
                 </label>
@@ -170,7 +170,7 @@ const Checkout = () => {
                         paymentMethod: e.target.value,
                       })
                     }
-                    className="text-orange-500 focus:ring-orange-500"
+                    className="text-[#b4166d] focus:ring-[#b4166d]"
                   />
                   <span>Cash on Delivery</span>
                 </label>
