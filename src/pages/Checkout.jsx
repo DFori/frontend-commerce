@@ -36,21 +36,19 @@ const Checkout = () => {
 
     try {
       const orderData = {
-        userDetails: {
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          email: formData.email,
-          address: formData.address,
-          zipcode: formData.zipCode,
-          phone: formData.phone,
-          stripe_token: formData.paymentMethod === "card" ? formData.stripe_token : null, // Include stripe token only for card payments
-        },
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        email: formData.email,
+        address: formData.address,
+        ziocode: formData.zipCode,
+        place: formData.city,
+        phone: formData.phone,
+        stripe_token: formData.paymentMethod === "card" ? formData.stripe_token : null, // Include stripe token only for card payments
         items: items.map((item) => ({
+          price: item.price,
           product: item.id,
           quantity: item.quantity,
-          price: item.price,
         })),
-        totalAmount: cartTotal,
       };
 
       await createOrder(orderData); // Using createOrder function
