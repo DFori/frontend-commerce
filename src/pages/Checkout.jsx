@@ -6,6 +6,10 @@ import Card from "../components/common/Card";
 import Input from "../components/common/Input";
 import Button from "../components/common/Button";
 import { createOrder } from "../services/api"; // Importing createOrder function
+import { loadStripe } from "@stripe/stripe-js"; // Import loadStripe
+import { Elements, CardElement } from "@stripe/react-stripe-js"; // Import Elements and CardElement
+
+const stripePromise = loadStripe("YOUR_STRIPE_PUBLISHABLE_KEY"); // Replace with your Stripe publishable key
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -34,6 +38,16 @@ const Checkout = () => {
     e.preventDefault();
     setLoading(true);
 
+    const stripe = await stripePromise; // Await the stripePromise to get the stripe instance
+    const cardElement = document.getElementById("card-element");
+    const { token, error } = await stripe.createToken(cardElement);
+
+    if (error) {
+      console.error("Stripe error:", error);
+      setLoading(false);
+      return;
+    }
+
     try {
       const orderData = {
         first_name: formData.first_name,
@@ -43,7 +57,7 @@ const Checkout = () => {
         ziocode: formData.zipCode,
         place: formData.city,
         phone: formData.phone,
-        stripe_token: formData.paymentMethod === "card" ? formData.stripe_token : null, // Include stripe token only for card payments
+        stripe_token: token.id, // Include stripe token
         items: items.map((item) => ({
           price: item.price,
           product: item.id,
@@ -62,177 +76,146 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+    <Elements stripe={stripePromise}>
+      <div className="max-w-4xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Order Summary */}
-        <Card title="Order Summary" className="h-fit">
-          <div className="space-y-4">
-            {items.map((item) => (
-              <div key={item.id} className="flex justify-between">
-                <div>
-                  <p className="font-medium">{item.name}</p>
-                  <p className="text-sm text-gray-600">
-                    Quantity: {item.quantity}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Order Summary */}
+          <Card title="Order Summary" className="h-fit">
+            <div className="space-y-4">
+              {items.map((item) => (
+                <div key={item.id} className="flex justify-between">
+                  <div>
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-sm text-gray-600">
+                      Quantity: {item.quantity}
+                    </p>
+                  </div>
+                  <p className="font-medium">
+                    ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
-                <p className="font-medium">
-                  ${(item.price * item.quantity).toFixed(2)}
-                </p>
-              </div>
-            ))}
-            <div className="border-t pt-4">
-              <div className="flex justify-between font-bold">
-                <span>Total</span>
-                <span>${cartTotal.toFixed(2)}</span>
+              ))}
+              <div className="border-t pt-4">
+                <div className="flex justify-between font-bold">
+                  <span>Total</span>
+                  <span>${cartTotal.toFixed(2)}</span>
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
 
-        {/* Delivery Details Form */}
-        <Card title="Delivery Details">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <Input
-              label="First Name"
-              name="first_name"
-              value={formData.first_name}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  first_name: e.target.value,
-                })
-              }
-              required
-            />
-            <Input
-              label="Last Name"
-              name="last_name"
-              value={formData.last_name}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  last_name: e.target.value,
-                })
-              }
-              required
-            />
-            <Input
-              label="Email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  email: e.target.value,
-                })
-              }
-              required
-            />
-            <Input
-              label="Delivery Address"
-              name="address"
-              value={formData.address}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  address: e.target.value,
-                })
-              }
-              required
-            />
-
-            <div className="grid grid-cols-2 gap-4">
+          {/* Delivery Details Form */}
+          <Card title="Delivery Details">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <Input
-                label="City"
-                name="city"
-                value={formData.city}
+                label="First Name"
+                name="first_name"
+                value={formData.first_name}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    city: e.target.value,
+                    first_name: e.target.value,
+                  })
+                }
+                required
+              />
+              <Input
+                label="Last Name"
+                name="last_name"
+                value={formData.last_name}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    last_name: e.target.value,
+                  })
+                }
+                required
+              />
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    email: e.target.value,
+                  })
+                }
+                required
+              />
+              <Input
+                label="Delivery Address"
+                name="address"
+                value={formData.address}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    address: e.target.value,
                   })
                 }
                 required
               />
 
+              <div className="grid grid-cols-2 gap-4">
+                <Input
+                  label="City"
+                  name="city"
+                  value={formData.city}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      city: e.target.value,
+                    })
+                  }
+                  required
+                />
+
+                <Input
+                  label="ZIP Code"
+                  name="zipCode"
+                  value={formData.zipCode}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      zipCode: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+
               <Input
-                label="ZIP Code"
-                name="zipCode"
-                value={formData.zipCode}
+                label="Phone Number"
+                name="phone"
+                type="tel"
+                value={formData.phone}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    zipCode: e.target.value,
+                    phone: e.target.value,
                   })
                 }
                 required
               />
-            </div>
 
-            <Input
-              label="Phone Number"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  phone: e.target.value,
-                })
-              }
-              required
-            />
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Payment Method
-              </label>
-              <div className="space-y-2">
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="card"
-                    checked={formData.paymentMethod === "card"}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        paymentMethod: e.target.value,
-                      })
-                    }
-                    className="text-[#b4166d] focus:ring-[#b4166d]"
-                  />
-                  <span>Credit/Debit Card</span>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Payment Method
                 </label>
-                <label className="flex items-center space-x-2">
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="cash"
-                    checked={formData.paymentMethod === "cash"}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        paymentMethod: e.target.value,
-                      })
-                    }
-                    className="text-[#b4166d] focus:ring-[#b4166d]"
-                  />
-                  <span>Cash on Delivery</span>
-                </label>
+                <CardElement id="card-element" className="border p-2" />
               </div>
-            </div>
 
-            <Button type="submit" loading={loading} className="w-full">
-              Place Order
-            </Button>
-          </form>
-        </Card>
+              <Button type="submit" loading={loading} className="w-full">
+                Place Order
+              </Button>
+            </form>
+          </Card>
+        </div>
       </div>
-    </div>
+    </Elements>
   );
 };
 
