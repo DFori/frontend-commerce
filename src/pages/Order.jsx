@@ -42,7 +42,7 @@ const Order = () => {
             <div key={order.id} className="border p-4 rounded-lg">
               <h2 className="font-semibold">Order ID: {order.id}</h2>
               <p>Status: {order.status}</p>
-              <p>Total: ${order.total}</p>
+              <p>Total: ${order.paid_amount}</p>
               {/* Add more order details as needed */}
             </div>
           ))}
