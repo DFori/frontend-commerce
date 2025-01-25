@@ -21,6 +21,7 @@ const Checkout = () => {
     zipCode: "",
     phone: "",
     paymentMethod: "card",
+    stripe_token: "", // Placeholder for stripe token
   });
 
   useEffect(() => {
@@ -35,15 +36,20 @@ const Checkout = () => {
 
     try {
       const orderData = {
+        userDetails: {
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          email: formData.email,
+          address: formData.address,
+          zipcode: formData.zipCode,
+          phone: formData.phone,
+          stripe_token: formData.paymentMethod === "card" ? formData.stripe_token : null, // Include stripe token only for card payments
+        },
         items: items.map((item) => ({
-          foodId: item.id,
+          product: item.id,
           quantity: item.quantity,
           price: item.price,
         })),
-        deliveryDetails: {
-          ...formData,
-          place: formData.address, // Set place to the same as address
-        },
         totalAmount: cartTotal,
       };
 
