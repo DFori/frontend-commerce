@@ -1,13 +1,10 @@
-/* eslint-disable react/no-unescaped-entities */
-import  { useState } from "react";
-import api from "../services/api";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-// import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext"; // Import useAuth
 
 const Login = () => {
   const navigate = useNavigate();
-  // const { login } = useAuth();
+  const { login } = useAuth(); // Get login function from context
 
   const [formData, setFormData] = useState({
     username: "",
@@ -21,15 +18,15 @@ const Login = () => {
     setError("");
     setLoading(true);
 
-    await api.post("/auth/token/login", formData)
-    .then(response => {
-      localStorage.setItem("token", response.data.auth_token)
-      console.log(response.status)
-      navigate("/")
-    })
-    .catch(error => {
-      console.log(error)
-    })
+    try {
+      await login(formData); // Use the login function from context
+      navigate("/"); // Navigate to home after successful login
+    } catch (error) {
+      setError("Login failed. Please check your credentials.");
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -87,7 +84,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#b4166d] hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b4166d]"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#b4166d] hover:bg-[[#690c43]] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#b4166d]"
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
@@ -96,7 +93,7 @@ const Login = () => {
         <div className="text-center">
           <Link
             to="/register"
-            className="text-[#b4166d] hover:text-orange-600"
+            className="text-[#b4166d] hover:text-[#690c43]"
           >
             Don't have an account? Sign up
           </Link>

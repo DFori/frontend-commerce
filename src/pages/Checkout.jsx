@@ -1,4 +1,5 @@
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext"; // Import useAuth
 import { useNavigate } from "react-router-dom"; // Added import for useNavigate
 import { useState, useEffect } from "react";
 import Card from "../components/common/Card";
@@ -9,8 +10,12 @@ import { createOrder } from "../services/api"; // Importing createOrder function
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, cartTotal, clearCart } = useCart();
+  const { user } = useAuth(); // Get user from context
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: user ? user.email : "", // Get email from logged-in user
     address: "",
     city: "",
     zipCode: "",
@@ -35,7 +40,10 @@ const Checkout = () => {
           quantity: item.quantity,
           price: item.price,
         })),
-        deliveryDetails: formData,
+        deliveryDetails: {
+          ...formData,
+          place: formData.address, // Set place to the same as address
+        },
         totalAmount: cartTotal,
       };
 
@@ -82,6 +90,43 @@ const Checkout = () => {
         {/* Delivery Details Form */}
         <Card title="Delivery Details">
           <form onSubmit={handleSubmit} className="space-y-6">
+            <Input
+              label="First Name"
+              name="first_name"
+              value={formData.first_name}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  first_name: e.target.value,
+                })
+              }
+              required
+            />
+            <Input
+              label="Last Name"
+              name="last_name"
+              value={formData.last_name}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  last_name: e.target.value,
+                })
+              }
+              required
+            />
+            <Input
+              label="Email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+              }
+              required
+            />
             <Input
               label="Delivery Address"
               name="address"

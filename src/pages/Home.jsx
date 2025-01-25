@@ -1,5 +1,8 @@
-import React from "react";
-import backgroundImage from "../assets/images/backg.jpg"; // Import the background image
+import React, { useEffect, useState } from "react";
+import backgroundImage from "../assets/images/backg.jpg"; // Import the default background image
+import image1 from "../assets/images/back.jpg"; // Import additional images for the slideshow
+import image2 from "../assets/images/background.jpeg";
+import image3 from "../assets/images/bg.jpg";
 import carrotImage from "../assets/images/carot.jpg"; // Import product images
 import moimoiImage from "../assets/images/coffee.jpg";
 import palmWineImage from "../assets/images/palm_wine.jpeg";
@@ -7,7 +10,24 @@ import pastriesImage from "../assets/images/pastries.jpg";
 import { ShoppingCart, CheckCircle, Truck } from "lucide-react";
 import { Link } from "react-router-dom";
 
+const images = [image1, image2, image3]; // Array of images for the slideshow
+
 const Home = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0); // State for current image index
+  const [fade, setFade] = useState(false); // State for fade effect
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(true); // Trigger fade out
+      setTimeout(() => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length); // Cycle through images
+        setFade(false); // Trigger fade in
+      }, 1000); // Duration of fade out
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, []);
+
   const featuredCategories = [
     { id: 1, slug: "pastry", image: pastriesImage, name: "Pastry" },
     { id: 2, slug: "carrot", image: carrotImage, name: "Carrot" },
@@ -40,11 +60,12 @@ const Home = () => {
 
   return (
     <div>
+      {/* Hero Section */}
       <div className="relative h-[500px] bg-gray-900">
         <img
-          src= {backgroundImage}
-          alt="Hero"
-          className="w-full h-full object-cover opacity-50"
+          src={images[currentImageIndex]} // Use current image from state
+          alt="Hero Slideshow"
+          className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-1000 ${fade ? 'opacity-0' : 'opacity-100'}`}
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white">
@@ -64,26 +85,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div
-        className="hero-section"
-        // style={{
-        //   backgroundImage: `url(${backgroundImage})`,
-        //   height: "400px",
-        //   backgroundSize: "cover",
-        //   backgroundPosition: "center",
-        // }}
-      >
-        <h1 className="text-white text-4xl">Welcome to Our Store</h1>
-      </div> */}
-      {/* <div className="products">
-        <h2>Featured Products</h2>
-        <div className="product-grid">
-          <img src={carrotImage} alt="Carrot" />
-          <img src={moimoiImage} alt="Moimoi" />
-          <img src={palmWineImage} alt="Palm Wine" />
-          <img src={pastriesImage} alt="Pastries" />
-        </div>
-      </div> */}
       {/* Featured Categories */}
       <section className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
@@ -113,8 +114,8 @@ const Home = () => {
         </div>
       </section>
 
-       {/* How It Works */}
-       <section className="bg-purple-50 py-12 px-4">
+      {/* How It Works */}
+      <section className="bg-purple-50 py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 text-center">How It Works</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
