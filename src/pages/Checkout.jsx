@@ -9,7 +9,7 @@ import { createOrder } from "../services/api"; // Importing createOrder function
 import { loadStripe } from "@stripe/stripe-js"; // Import loadStripe
 import { Elements, CardElement } from "@stripe/react-stripe-js"; // Import Elements and CardElement
 
-const stripePromise = loadStripe("YOUR_STRIPE_PUBLISHABLE_KEY"); // Replace with your Stripe publishable key
+const stripePromise = loadStripe("pk_test_51QkyVACQCYGpSyxCJm3P7kxsmaqLKofxYlbCxeGXnN2KiVZ18g1yc1dP467rm0GeNE64wYc3wKyUeOUp91x8lsJE00Ie0F77m3"); // Replace with your Stripe publishable key
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -41,7 +41,8 @@ const Checkout = () => {
     const stripe = await stripePromise; // Await the stripePromise to get the stripe instance
     const cardElement = document.getElementById("card-element");
     const { token, error } = await stripe.createToken(cardElement);
-
+    
+    
     if (error) {
       console.error("Stripe error:", error);
       setLoading(false);
@@ -64,7 +65,11 @@ const Checkout = () => {
           quantity: item.quantity,
         })),
       };
-
+      // if (!stripe || !elements) {
+      //   console.log("Stripe is not initialized yet.");
+      //   return;
+      // }
+      
       await createOrder(orderData); // Using createOrder function
       clearCart();
       navigate("/orders");

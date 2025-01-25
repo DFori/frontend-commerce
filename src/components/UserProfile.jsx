@@ -30,9 +30,9 @@ const UserProfile = () => {
         />
         <h2 className="text-xl font-semibold">{username}</h2> {/* Display fetched username */}
       </div>
-      <Link to="/add-product-category" className="text-blue-500 underline">
-        Add Products and Categories
-      </Link>
+<Link to="/vendor-application" className="text-blue-500 underline">
+  Apply to be a Vendor
+</Link>
       {/* Other form elements */}
     </div>
   );
