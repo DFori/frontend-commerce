@@ -10,9 +10,6 @@ import api from "../services/api";
 import { createOrder } from "../services/api"; // Importing createOrder function
 import { loadStripe } from "@stripe/stripe-js"; // Import loadStripe
 import { Elements, CardElement } from "@stripe/react-stripe-js"; // Import Elements and CardElement
-
-const stripePromise = loadStripe("pk_test_51QkyVACQCYGpSyxCJm3P7kxsmaqLKofxYlbCxeGXnN2KiVZ18g1yc1dP467rm0GeNE64wYc3wKyUeOUp91x8lsJE00Ie0F77m3"); // Replace with your Stripe publishable key
-
 const Checkout = () => {
   const navigate = useNavigate();
   const { items, cartTotal, clearCart } = useCart();
@@ -52,8 +49,7 @@ const Checkout = () => {
     // const stripe = await stripePromise; // Await the stripePromise to get the stripe instance
     // const cardElement = document.getElementById("card-element");
     // const { token, error } = await stripe.createToken(cardElement);
-    
-    
+
     // if (error) {
     //   console.error("Stripe error:", error);
     //   setLoading(false);
@@ -76,19 +72,22 @@ const Checkout = () => {
           quantity: item.quantity,
         })),
       };
-      // if (!stripe || !elements) {
-      //   console.log("Stripe is not initialized yet.");
-      //   return;
+
+      await api.post("order/checkout/", orderData).then((response) => {
+        console.log(response.data.clientSecret);
+        navigate("/payment", {
+          state: { clientSecret: response.data.clientSecret },
+        });
+      });
+
+      // const response = await api.post("order/checkout/", orderData) //manually writing it
+      // console.log(response.data.clientSecret)
+      // if (response.data.clientSecret) {
+      //   navigate("/payment", { state: { clientSecret: response.data.clientSecret } });
+      // } else {
+      //   alert("Error creating payment intent.");
       // }
-      
-      const response = await api.post("order/checkout/", orderData) //manually writing it
-      console.log(response.data.clientSecret)
-      if (response.data.clientSecret) {
-        navigate("/payment", { state: { clientSecret: response.data.clientSecret } });
-      } else {
-        alert("Error creating payment intent.");
-      }          
-      clearCart();
+      // clearCart();
     } catch (error) {
       console.error("Checkout error:", error);
     } finally {
@@ -97,144 +96,142 @@ const Checkout = () => {
   };
 
   return (
-    
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+    <div className="max-w-4xl mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Checkout</h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Order Summary */}
-          <Card title="Order Summary" className="h-fit">
-            <div className="space-y-4">
-              {items.map((item) => (
-                <div key={item.id} className="flex justify-between">
-                  <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-sm text-gray-600">
-                      Quantity: {item.quantity}
-                    </p>
-                  </div>
-                  <p className="font-medium">
-                    ${(item.price * item.quantity).toFixed(2)}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Order Summary */}
+        <Card title="Order Summary" className="h-fit">
+          <div className="space-y-4">
+            {items.map((item) => (
+              <div key={item.id} className="flex justify-between">
+                <div>
+                  <p className="font-medium">{item.name}</p>
+                  <p className="text-sm text-gray-600">
+                    Quantity: {item.quantity}
                   </p>
                 </div>
-              ))}
-              <div className="border-t pt-4">
-                <div className="flex justify-between font-bold">
-                  <span>Total</span>
-                  <span>${cartTotal.toFixed(2)}</span>
-                </div>
+                <p className="font-medium">
+                  ${(item.price * item.quantity).toFixed(2)}
+                </p>
+              </div>
+            ))}
+            <div className="border-t pt-4">
+              <div className="flex justify-between font-bold">
+                <span>Total</span>
+                <span>${cartTotal.toFixed(2)}</span>
               </div>
             </div>
-          </Card>
+          </div>
+        </Card>
 
-          {/* Delivery Details Form */}
-          
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <Input
-                label="First Name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    first_name: e.target.value,
-                  })
-                }
-                required
-              />
-              <Input
-                label="Last Name"
-                name="last_name"
-                value={formData.last_name}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    last_name: e.target.value,
-                  })
-                }
-                required
-              />
-              <Input
-                label="Email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    email: e.target.value,
-                  })
-                }
-                required
-              />
-              <Input
-                label="Delivery Address"
-                name="address"
-                value={formData.address}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    address: e.target.value,
-                  })
-                }
-                required
-              />
+        {/* Delivery Details Form */}
 
-              <div className="grid grid-cols-2 gap-4">
-                <Input
-                  label="City"
-                  name="city"
-                  value={formData.city}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      city: e.target.value,
-                    })
-                  }
-                  required
-                />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <Input
+            label="First Name"
+            name="first_name"
+            value={formData.first_name}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                first_name: e.target.value,
+              })
+            }
+            required
+          />
+          <Input
+            label="Last Name"
+            name="last_name"
+            value={formData.last_name}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                last_name: e.target.value,
+              })
+            }
+            required
+          />
+          <Input
+            label="Email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                email: e.target.value,
+              })
+            }
+            required
+          />
+          <Input
+            label="Delivery Address"
+            name="address"
+            value={formData.address}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                address: e.target.value,
+              })
+            }
+            required
+          />
 
-                <Input
-                  label="ZIP Code"
-                  name="zipCode"
-                  value={formData.zipCode}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      zipCode: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Input
+              label="City"
+              name="city"
+              value={formData.city}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  city: e.target.value,
+                })
+              }
+              required
+            />
 
-              <Input
-                label="Phone Number"
-                name="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    phone: e.target.value,
-                  })
-                }
-                required
-              />
+            <Input
+              label="ZIP Code"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  zipCode: e.target.value,
+                })
+              }
+              required
+            />
+          </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Payment Method
-                </label>
-              </div>
+          <Input
+            label="Phone Number"
+            name="phone"
+            type="tel"
+            value={formData.phone}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                phone: e.target.value,
+              })
+            }
+            required
+          />
 
-              <Button type="submit" loading={loading} className="w-full">
-                Place Order
-              </Button>
-            </form>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Payment Method
+            </label>
+          </div>
 
-        </div>
+          <Button type="submit" loading={loading} className="w-full">
+            Place Order
+          </Button>
+        </form>
       </div>
+    </div>
   );
 };
 

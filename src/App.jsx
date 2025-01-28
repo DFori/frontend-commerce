@@ -13,7 +13,7 @@ import {
   AddProductCategory,
   VendorApplication,
 } from "./pages";
-import PaymentPage from "./pages/paymentpage";
+import PaymentPage from "./pages/PaymentPage";
 import Order from "./pages/Order";
 import UserProfile from "./components/UserProfile"; // Import UserProfile
 

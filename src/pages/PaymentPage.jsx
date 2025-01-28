@@ -14,6 +14,7 @@ const PaymentPage = () => {
   const { clientSecret } = location.state || {};
   const [options, setOptions] = useState(null);
 
+  console.log(clientSecret)
   useEffect(() => {
     if (clientSecret) {
       setOptions({
