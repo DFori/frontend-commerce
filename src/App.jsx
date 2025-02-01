@@ -1,32 +1,54 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { CartProvider } from './context/CartContext'; // Import the CartProvider
-import Banner from './components/common/Banner'; // Import the Banner component
-import AdvertisementBanner from './components/common/AdvertisementBanner'; // Import the AdvertisementBanner component
-import VendorApplication from './pages/VendorApplication';
-import Checkout from './pages/Checkout';
-import Login from './pages/Login';
-import UserProfile from './components/UserProfile';
-import Menu from './pages/Menu'; // Import the Menu component
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { CartProvider } from "./context/CartContext";
+import Layout from "./components/layout/Layout";
+import {
+  Home,
+  Menu,
+  Cart,
+  Login,
+  Register,
+  Checkout,
+  AddProductCategory,
+  VendorApplication,
+} from "./pages";
+import PaymentPage from "./pages/PaymentPage";
+import Order from "./pages/Order";
+import UserProfile from "./components/UserProfile"; // Import UserProfile
 
 const App = () => {
   return (
-    <CartProvider> {/* Wrap the component tree with CartProvider */}
-      <Router>
-        <div>
-          <Banner /> {/* Add the Banner component here */}
-          <AdvertisementBanner /> {/* Add the AdvertisementBanner component here */}
-          <Routes>
-            <Route path="/vendor-application" element={<VendorApplication />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/user-profile" element={<UserProfile />} />
-            <Route path="/menu" element={<Menu />} /> {/* Add the Menu route */}
-            {/* Add other routes as needed */}
-          </Routes>
-        </div>
-      </Router>
-    </CartProvider>
+    <Router>
+      <AuthProvider>
+        <CartProvider>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/cart" element={<Cart />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/orders" element={<Order />} />
+              <Route path="/profile" element={<UserProfile />} />{" "}
+              {/* New route for UserProfile */}
+              <Route
+                path="/add-product-category"
+                element={<AddProductCategory />}
+              />{" "}
+              {/* New route for AddProductCategory */}
+              <Route
+                path="/vendor-application"
+                element={<VendorApplication />}
+              />{" "}
+              {/* New route for VendorApplication */}
+            </Routes>
+          </Layout>
+        </CartProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 
