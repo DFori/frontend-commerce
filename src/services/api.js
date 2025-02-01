@@ -25,7 +25,11 @@ export const getCategories = async () => {
   return response.data;
 };
 
-// New createOrder function
+export const createVendor = async (vendorData) => {
+  const response = await api.post("/vendors/create/", vendorData);
+  return response.data;
+};
+
 export const createOrder = async (orderData) => {
   const response = await api.post("/order/checkout-delivery/", orderData);
   return response.data;

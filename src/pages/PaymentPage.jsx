@@ -27,14 +27,14 @@ const PaymentPage = () => {
   }, [clientSecret]);
 
   return (
-    <div className="container">
-      <h1>Complete Your Payment</h1>
+    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold text-center mb-4">Complete Your Payment</h1>
       {options ? (
         <Elements stripe={stripePromise} options={options}>
           <PaymentForm />
         </Elements>
       ) : (
-        <p>Loading payment details...</p>
+        <p className="text-center">Loading payment details...</p>
       )}
     </div>
   );

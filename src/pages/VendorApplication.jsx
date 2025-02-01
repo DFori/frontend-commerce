@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { createVendor } from "../services/api.js";
+import { getCurrentUser } from "../services/auth"; // Import the function
 
 const VendorApplication = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [id, setId] = useState("");
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setUser(userData.id); // Assuming the user ID is in userData.id
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log({ phoneNumber, address, businessName });
+    const vendorData = { id, user, phoneNumber, address, businessName };
+    
+    const submitVendor = async () => {
+      try {
+        const data = await createVendor(vendorData);
+        console.log('Vendor created successfully:', data);
+      } catch (error) {
+        console.error('Error creating vendor:', error);
+      }
+    };
+
+    submitVendor();
   };
 
   return (
